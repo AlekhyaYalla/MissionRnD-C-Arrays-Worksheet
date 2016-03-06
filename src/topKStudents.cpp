@@ -15,12 +15,81 @@ NOTES:
 
 #include <iostream>
 #include <malloc.h>
+#include<stdlib.h>
 
-struct student {
+typedef struct student {
 	char *name;
 	int score;
 };
-
-struct student ** topKStudents(struct student *students, int len, int K) {
-	return NULL;
+int* max(student *, int *, student, int, int);
+student ** topKStudents(struct student *students, int len, int K) {
+	
+	int i = 0, j = 0, *f, n = 0;
+	student *b, m,**result=NULL;
+	if (students == NULL || len <= 0 || K <= 0)
+		return NULL;
+	if (K > len)
+		K = len;
+	b = (student*)malloc(sizeof(student)*K);
+	f = (int*)calloc(len, sizeof(int));
+	while (j<K)
+	{
+		while (f[i] == 1)
+			i++;
+		n = 0;
+		m.score = students[i].score;
+		while (students[i].name[n] != '\0')
+		{
+			m.name[n] = students[i].name[n];
+			n++;
+		}
+		m.name[n] = '\0';
+		f[i] = 1;
+		f = max(students, f, m, len, i);
+		j++;
+	}
+	i = 0;
+	j = 0;
+	while (i<len && j<K)
+	{
+		if (f[i] == 1)
+		{
+			b[j].score = students[i].score;
+			n = 0;
+			while (students[i].name[n] != '\0')
+			{
+				b[j].name[n] = students[i].name[n];
+				n++;
+			}
+			b[j].name[n] = '\0';
+			j++;
+		}
+		i++;
+	}
+	i = 0;
+	while (i < K)
+	{
+		b[i] = *result[i];
+		i++;
+	}
+	return result;
+}
+int* max(student *a, int *f, student m, int l, int n)
+{
+	int i = 0, j = 0;
+	while (i<l)
+	{
+		if (a[i].score>m.score&&f[i] != 1)
+		{
+			m.score = a[i].score;
+			j = i;
+		}
+		i++;
+	}
+	if (j>0)
+	{
+		f[j] = 1;
+		f[n] = 0;
+	}
+	return f;
 }

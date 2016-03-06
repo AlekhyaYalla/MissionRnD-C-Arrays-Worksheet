@@ -15,11 +15,51 @@ NOTES:
 
 #include <stdio.h>
 
-struct student {
+typedef struct student {
 	char name[10];
 	int score;
 };
-
+student* swap(student *, int, int);
 void * scoresDescendingSort(struct student *students, int len) {
-	return NULL;
+	if (students == NULL || len <= 0)
+		return NULL;
+	int i, j;
+	for (i = len - 1; i >= 0; i--)
+	{
+		for (j = i - 1; j >= 0; j--)
+		{
+			if (students[i].score>students[j].score)
+				students = swap(students, i, j);
+		}
+	}
+	return students;
+}
+student* swap(student *a, int i, int j)
+{
+	char t[10] = "\0";
+	int t1, n = 0;
+	while (a[i].name[n] != '\0')
+	{
+		t[n] = a[i].name[n];
+		n++;
+	}
+	t[n] = '\0';
+	t1 = a[i].score;
+	n = 0;
+	while (a[i].name[n] != '\0')
+	{
+		a[i].name[n] = a[j].name[n];
+		n++;
+	}
+	a[i].name[n] = '\0';
+	a[i].score = a[j].score;
+	n = 0;
+	while (a[i].name[n] != '\0')
+	{
+		a[j].name[n] = t[n];
+		n++;
+	}
+	a[j].name[n] = '\0';
+	a[j].score = t1;
+	return a;
 }

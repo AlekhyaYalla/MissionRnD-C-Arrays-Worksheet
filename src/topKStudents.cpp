@@ -31,6 +31,7 @@ student ** topKStudents(struct student *students, int len, int K) {
 	if (K > len)
 		K = len;
 	b = (student*)malloc(sizeof(student)*K);
+	m.name = (char*)malloc(sizeof(char) * 1);
 	f = (int*)calloc(len, sizeof(int));
 	while (j<K)
 	{
@@ -40,6 +41,7 @@ student ** topKStudents(struct student *students, int len, int K) {
 		m.score = students[i].score;
 		while (students[i].name[n] != '\0')
 		{
+			realloc(m.name, n + 1);
 			m.name[n] = students[i].name[n];
 			n++;
 		}
